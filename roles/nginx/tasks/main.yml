@@ -3,8 +3,6 @@
     name:
       - nginx
     state: present
-    update_cache: yes
-    cache_valid_time: 3600
   become: yes
 
 - name: start nginx
@@ -12,9 +10,15 @@
     name: nginx
     state: started
   become: yes
+  
+- name: Create /var/www/html directory
+  file:
+    path: /var/www/html
+    state: directory
+  become: yes
 
 - name: index
   template:
     src: index.html.j2
     dest: /var/www/html/index.html
-
+  become: yes
